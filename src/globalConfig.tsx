@@ -14,7 +14,7 @@ export const globalConfig = {
     // 供用户选择的主题色，如不提供该功能，则设为空数组
     customColorPrimarys: ['#1677ff', '#f5222d', '#fa8c16', '#722ed1', '#13c2c2', '#52c41a'],
     /*
-        localforage的key
+        localStorage的key
     */
     STROGE_KEY_THEME: 'userTheme',
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Input, Form } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import localforage from 'localforage'
 import authRequest from '@/api/auth'
 import { globalConfig } from '@/globalConfig'
 import imgLogo from './logo.png'
@@ -18,13 +17,15 @@ const Login: React.FC = () => {
 
     const handleLogin = async (username: string, password: string) => {
         const data = await authRequest.login({ username, password })
-        await localforage.setItem(globalConfig.STROGE_KEY_TOKEN, data.token)
+        console.log(data)
+        localStorage.setItem(globalConfig.STROGE_KEY_TOKEN, data.token)
         navigate('/notebooks')
     }
 
     const handleRegister = async (username: string, password: string) => {
         const data = await authRequest.register({ username, password })
-        await localforage.setItem(globalConfig.STROGE_KEY_TOKEN, data.token)
+        console.log(data)
+        localStorage.setItem(globalConfig.STROGE_KEY_TOKEN, data.token)
         navigate('/notebooks')
     }
 

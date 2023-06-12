@@ -1,16 +1,15 @@
 import axios, { InternalAxiosRequestConfig, AxiosRequestConfig, AxiosResponse } from 'axios'
-import localforage from 'localforage'
 import { globalConfig } from '@/globalConfig'
 import { message } from 'antd'
-import { router } from '@/router'
+import router from '@/router'
 
 const baseURL = import.meta.env.VITE_BASE_URL
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.baseURL = baseURL
 
 axios.interceptors.request.use(
-    async (config: InternalAxiosRequestConfig) => {
-        const token = (await localforage.getItem(globalConfig.STROGE_KEY_TOKEN)) || 'token'
+    (config: InternalAxiosRequestConfig) => {
+        const token = localStorage.getItem(globalConfig.STROGE_KEY_TOKEN) || 'token'
 
         config.headers.Authorization = 'Bearer ' + token
         return config

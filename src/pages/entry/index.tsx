@@ -1,4 +1,4 @@
-import { PrivateRoute } from '@/router'
+import  PrivateRoute  from '@/components/privateRoute'
 import { Outlet } from 'react-router-dom'
 
 const Entry: React.FC = () => {
