@@ -4,8 +4,9 @@ import { globalConfig } from '@/globalConfig'
 import { message } from 'antd'
 import { router } from '@/router'
 
+const baseURL = import.meta.env.VITE_BASE_URL
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
+axios.defaults.baseURL = baseURL
 
 axios.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {

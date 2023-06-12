@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import autoprefixer from 'autoprefixer'
 import sassDts from 'vite-plugin-sass-dts'
+import { viteMockServe } from 'vite-plugin-mock'
 import path from 'path'
 
 export default defineConfig({
@@ -32,6 +33,10 @@ export default defineConfig({
                 generate: true,
                 outFile: path.resolve(__dirname, './src/types/style.d.ts'),
             },
+        }),
+        viteMockServe({
+            mockPath: './mock',
+            watchFiles: true,
         }),
     ],
     resolve: {

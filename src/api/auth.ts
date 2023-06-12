@@ -15,7 +15,6 @@ interface UserData {
     updatedAt: string
     username: string
 }
-
 export default {
     async register({ username, password }: { username: string; password: string }): Promise<UserData> {
         return await sendRequest<UserData>(URL.REGISTER, 'POST', { username, password })
