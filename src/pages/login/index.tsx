@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Input, Form } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import localforage from 'localforage'
+import authRequest from '@/api/auth'
+import { globalConfig } from '@/globalConfig'
 import imgLogo from './logo.png'
 import style from './login.module.scss'
 
@@ -13,15 +16,15 @@ const Login: React.FC = () => {
         setIsLogin(!isLogin)
     }
 
-    const handleLogin = (userName: string, password: string) => {
-        // 处理登录逻辑
-        console.log('login')
+    const handleLogin = async (username: string, password: string) => {
+        const data = await authRequest.login({ username, password })
+        await localforage.setItem(globalConfig.STROGE_KEY_TOKEN, data.token)
         navigate('/notebooks')
     }
 
-    const handleRegister = (userName: string, password: string) => {
-        // 处理注册逻辑
-        console.log('register')
+    const handleRegister = async (username: string, password: string) => {
+        const data = await authRequest.register({ username, password })
+        await localforage.setItem(globalConfig.STROGE_KEY_TOKEN, data.token)
         navigate('/notebooks')
     }
 
@@ -48,14 +51,15 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ isLogin, onSubmit }) => {
-    const [userName, setUserName] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        onSubmit(userName, password)
+        onSubmit(username, password)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const validateUsername = (_: any, value: string) => {
         const regex = /^[a-zA-Z0-9_\u4e00-\u9fa5]{3,15}$/
         if (!regex.test(value)) {
@@ -64,6 +68,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isLogin, onSubmit }) => {
         return Promise.resolve()
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const validatePassword = (_: any, value: string) => {
         if (value && (value.length < 6 || value.length > 16)) {
             return Promise.reject('密码长度必须为6~16个字符')
@@ -72,7 +77,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isLogin, onSubmit }) => {
     }
 
     return (
-        <Form name="normal_login" onFinish={handleSubmit}>
+        <Form name="normal_login">
             <img src={imgLogo} alt="" className={style.logo} />
             <Form.Item
                 name="username"
@@ -82,8 +87,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ isLogin, onSubmit }) => {
                 <Input
                     prefix={<UserOutlined className="site-form-item-icon" />}
                     placeholder="用户名"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
             </Form.Item>
             <Form.Item
@@ -100,7 +105,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isLogin, onSubmit }) => {
                 />
             </Form.Item>
             <Form.Item className={style['ipt-con']}>
-                <Button type="primary" block={true} htmlType="submit">
+                <Button type="primary" block={true} htmlType="submit" onClick={handleSubmit}>
                     {isLogin ? '登录' : '注册'}
                 </Button>
             </Form.Item>

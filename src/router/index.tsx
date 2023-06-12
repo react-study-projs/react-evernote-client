@@ -1,4 +1,6 @@
 import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
+import localforage from 'localforage'
+import { globalConfig } from '@/globalConfig'
 import Login from '@/pages/login'
 import Entry from '@/pages/entry'
 import Notebooks from '@/pages/notebooks'
@@ -47,9 +49,13 @@ const routes: RouteObject[] = [
 export const router = createBrowserRouter(routes)
 
 // 路由守卫
-export const PrivateRoute = (props: React.PropsWithChildren) => {
-    // // 判断localStorage是否有登录用户信息，如果没有则跳转登录页
-    // return window.localStorage.getItem(globalConfig.STROGE_KEY_TOKEN) ? props.children : <Navigate to="/login" />
+export const PrivateRoute = async (props: React.PropsWithChildren) => {
+    //  判断localforage是否有登录用户信息，如果没有则跳转登录页
+    const token = await localforage.getItem(globalConfig.STROGE_KEY_TOKEN)
+
+    if (!token) {
+        return <Navigate to="/login" />
+    }
 
     return <>{props.children}</>
 }
