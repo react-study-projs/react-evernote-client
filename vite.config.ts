@@ -5,6 +5,8 @@ import sassDts from 'vite-plugin-sass-dts'
 import path from 'path'
 
 export default defineConfig({
+    envDir: './config',
+    envPrefix: ['VITE', 'CUSTOMIZE'],
     server: {
         // 支持IP访问
         host: true,
