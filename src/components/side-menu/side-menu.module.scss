@@ -1,0 +1,13 @@
+.group-ct {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .group {
+        &.top {
+            margin-bottom: 30px;
+        }
+        &.middle {
+            flex: 1;
+        }
+    }
+}
