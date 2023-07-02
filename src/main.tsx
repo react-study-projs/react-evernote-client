@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import router from '@/router'
-import '@/common/styles/frame.scss'
+import '@/common/styles/index.scss'
 
 function shouldUseMockData(): boolean {
     const env = import.meta.env

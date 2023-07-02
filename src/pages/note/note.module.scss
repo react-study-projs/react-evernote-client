@@ -1,0 +1,37 @@
+.note-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+}
+
+.notebook-select {
+  width: 200px;
+}
+
+.add-button {
+  margin-left: 10px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+}
+
+.note-list {
+  flex: 1;
+  padding: 10px;
+}
+
+.note-detail {
+  width: 400px;
+  padding: 10px;
+}
